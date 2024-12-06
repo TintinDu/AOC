@@ -1,11 +1,16 @@
-import fs from "fs";
-import path from "path";
-import { getSum } from "./common";
+export const getLists = (myInput: string) => {
+  const { list1, list2 } = myInput
+    .split("\n")
+    .map((string) => string.split("   "))
+    .reduce(
+      (acc: { list1: number[]; list2: number[] }, currentValue) => {
+        const [lol, lal] = currentValue;
+        acc.list1.push(+lol);
+        acc.list2.push(+lal);
+        return acc;
+      },
+      { list1: [], list2: [] }
+    );
 
-const myInput = fs
-  .readFileSync(path.join(import.meta.dirname, "input.txt"))
-  .toString();
-
-const sum = getSum(myInput);
-
-console.log(sum);
+  return { list1, list2 };
+};
